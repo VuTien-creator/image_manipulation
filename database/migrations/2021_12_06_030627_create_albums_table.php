@@ -18,8 +18,8 @@ class CreateAlbumsTable extends Migration
             $table->id();
             $table->string('name',255);
             $table->timestamps();
-            $table->foreignIdFor(User::class,'user_id');
-            
+            $table->foreignIdFor(User::class,'user_id')->nullable();
+
         });
     }
 
