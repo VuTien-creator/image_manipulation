@@ -22,7 +22,7 @@ class ImageManipulationController extends Controller
      */
     public function index()
     {
-        return ImageManipulatioResource::collection(ImageManipulation::all());
+        return ImageManipulatioResource::collection(ImageManipulation::paginate());
     }
 
     /**
@@ -98,9 +98,9 @@ class ImageManipulationController extends Controller
      * @param  \App\Models\ImageManipulation  $imageManipulation
      * @return \Illuminate\Http\Response
      */
-    public function show(ImageManipulation $imageManipulation)
+    public function show(ImageManipulation $image)
     {
-        return new ImageManipulatioResource($imageManipulation);
+        return new ImageManipulatioResource($image);
     }
 
 
@@ -110,14 +110,19 @@ class ImageManipulationController extends Controller
      * @param  \App\Models\ImageManipulation  $imageManipulation
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ImageManipulation $imageManipulation)
+    public function destroy(ImageManipulation $image)
     {
         //
-        $imageManipulation->delete();
+        $image->delete();
         return response('',204);
     }
 
-    public function byAlbum(Album $album){
+    public function byAlbum(Album $album)
+    {
+        $where = [
+            'album_id' => $album->id,
+        ];
+        return ImageManipulatioResource::collection(ImageManipulation::where($where)->paginate());
 
     }
 
